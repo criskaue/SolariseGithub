@@ -1,0 +1,17 @@
+.container{
+    padding-top: 84px;
+    width: 100%;
+    height: 80vh;
+    background: white;
+    color:black;
+    text-align: center;
+}
+
+.container h2{
+    padding-block: 1rem;
+}
+
+.container img{
+    height: 450px;
+    padding-bottom: 2rem;
+}
