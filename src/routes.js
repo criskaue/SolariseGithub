@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro"
 import PageNotFound from "./pages/PageNotFound";
+import Splash from "./pages/Splash";
 
 function AppRoutes(){
     return(
