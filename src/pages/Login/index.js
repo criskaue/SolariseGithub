@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./Login.module.css";
-import usuarios from "../../mocks/usuarios";
+import api from "../../services/api";
 import solarBg from "../../components/images/solar.jpg";
 import logoImg from "../../components/images/logo.png";
 
@@ -12,14 +12,19 @@ function Login() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const navigate = useNavigate();
 
-  function handleLogin(event) {
+  async function handleLogin(event) {
     event.preventDefault();
-    const usuarioEncontrado = usuarios.find(
-      (u) => u.email === email && u.senha === senha
-    );
-    if (usuarioEncontrado) {
+    setErro("");
+    try {
+      const params = new URLSearchParams();
+      params.append("username", email);
+      params.append("password", senha);
+      const { data } = await api.post("/auth/login", params, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      });
+      localStorage.setItem("token", data.access_token);
       navigate("/");
-    } else {
+    } catch {
       setErro("Usuário ou senha inválidos");
     }
   }
