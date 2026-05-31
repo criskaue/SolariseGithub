@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./Login.module.css";
-import api from "../../services/api";
+import { useAuth } from "../../contexts/AuthContext";
 import solarBg from "../../components/images/solar.jpg";
 import logoImg from "../../components/images/logo.png";
 
@@ -10,20 +10,15 @@ function Login() {
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   async function handleLogin(event) {
     event.preventDefault();
     setErro("");
     try {
-      const params = new URLSearchParams();
-      params.append("username", email);
-      params.append("password", senha);
-      const { data } = await api.post("/auth/login", params, {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      });
-      localStorage.setItem("token", data.access_token);
-      navigate("/");
+      const profile = await login(email, senha);
+      navigate(profile.role === "instaladora" ? "/homeinstaladora" : "/homelocadora");
     } catch {
       setErro("Usuário ou senha inválidos");
     }
@@ -63,7 +58,7 @@ function Login() {
               <input
                 className={styles.input}
                 type={mostrarSenha ? "text" : "password"}
-                placeholder="••••••"
+                placeholder="Senha"
                 value={senha}
                 onChange={(e) => { setSenha(e.target.value); setErro(""); }}
               />

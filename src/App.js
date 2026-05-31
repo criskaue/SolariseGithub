@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AppRoutes from "./routes";
 import Splash from "./pages/Splash";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   const [splashVisivel, setSplashVisivel] = useState(true);
@@ -11,10 +12,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       {splashVisivel && <Splash />}
       <AppRoutes />
-    </>
+    </AuthProvider>
   );
 }
 
