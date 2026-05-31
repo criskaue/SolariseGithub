@@ -10,6 +10,7 @@ export default function Geracao() {
   const [resultado, setResultado] = useState(null);
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
+  const [baixandoPdf, setBaixandoPdf] = useState(false);
 
   useEffect(() => {
     api.get('/contracts/').then(({ data }) => setContratos(data));
@@ -30,6 +31,34 @@ export default function Geracao() {
       setErro('Erro ao calcular preview. Verifique os dados e tente novamente.');
     } finally {
       setCarregando(false);
+    }
+  }
+
+  async function handleDownloadPdf(geracaoId) {
+    setBaixandoPdf(true);
+    setErro('');
+    try {
+      const response = await api.get(`/pdf/${geracaoId}`, {
+        responseType: 'blob', // instrui o axios a tratar a resposta como dado binário
+      });
+
+      // Cria uma URL temporária apontando para o blob recebido
+      const url = URL.createObjectURL(response.data);
+
+      // Cria um link invisível, dispara o download e remove o link
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `geracao_${geracaoId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Libera a memória ocupada pela URL temporária
+      URL.revokeObjectURL(url);
+    } catch {
+      setErro('Não foi possível baixar o PDF. Tente novamente.');
+    } finally {
+      setBaixandoPdf(false);
     }
   }
 
@@ -58,7 +87,11 @@ export default function Geracao() {
         <p><strong>Hash anterior:</strong> {resultado.previous_hash}</p>
         <p><strong>Valor:</strong> R$ {resultado.value}</p>
         <p><strong>Data:</strong> {new Date(resultado.date).toLocaleString('pt-BR')}</p>
-        <button onClick={() => { setResultado(null); setPreview(null); setContractId(''); setEnergiaGerada(''); setDataHora(''); }}>
+        {erro && <p style={{ color: 'red' }}>{erro}</p>}
+        <button onClick={() => handleDownloadPdf(resultado.id)} disabled={baixandoPdf}>
+          {baixandoPdf ? 'Gerando PDF...' : 'Baixar PDF'}
+        </button>
+        <button onClick={() => { setResultado(null); setPreview(null); setContractId(''); setEnergiaGerada(''); setDataHora(''); }} style={{ marginLeft: '8px' }}>
           Novo Registro
         </button>
       </div>
