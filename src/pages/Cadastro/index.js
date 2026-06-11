@@ -53,7 +53,7 @@ function Cadastro() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [perfil, setPerfil] = useState("instaladora");
+  const [perfil, setPerfil] = useState("locadora");
   const [orgNome, setOrgNome] = useState("");
   const [orgCnpj, setOrgCnpj] = useState("");
   const [orgEmail, setOrgEmail] = useState("");
@@ -79,9 +79,9 @@ function Cadastro() {
       email: validar("email", email),
       senha: validar("senha", senha),
       confirmarSenha: validar("confirmarSenha", confirmarSenha, senha),
-      orgNome: validar("orgNome", orgNome),
-      orgCnpj: validar("orgCnpj", orgCnpj),
-      orgEmail: validar("orgEmail", orgEmail),
+      orgNome: perfil === "locadora" ? validar("orgNome", orgNome) : "",
+      orgCnpj: perfil === "locadora" ? validar("orgCnpj", orgCnpj) : "",
+      orgEmail: perfil === "locadora" ? validar("orgEmail", orgEmail) : "",
     };
     setErros(novosErros);
     return Object.values(novosErros).every((e) => e === "");
@@ -93,15 +93,13 @@ function Cadastro() {
     setErroServidor("");
     setCarregando(true);
     try {
-      await register({
-        name: nome,
-        email,
-        password: senha,
-        role: perfil,
-        org_name: orgNome,
-        org_cnpj: orgCnpj,
-        org_email: orgEmail,
-      });
+      const payload = { name: nome, email, password: senha, role: perfil };
+      if (perfil === "locadora") {
+        payload.org_name = orgNome;
+        payload.org_cnpj = orgCnpj;
+        payload.org_email = orgEmail;
+      }
+      await register(payload);
       navigate("/login");
     } catch (err) {
       const detail = err?.response?.data?.detail;
@@ -212,54 +210,68 @@ function Cadastro() {
 
           <div className={styles.field}>
             <label className={styles.label}>Perfil</label>
-            <select className={styles.input} value={perfil} onChange={(e) => setPerfil(e.target.value)}>
-              <option value="instaladora">Instaladora</option>
+            <select
+              className={styles.input}
+              value={perfil}
+              onChange={(e) => {
+                setPerfil(e.target.value);
+                if (e.target.value !== "locadora") {
+                  setOrgNome(""); setOrgCnpj(""); setOrgEmail("");
+                  setErros((prev) => ({ ...prev, orgNome: "", orgCnpj: "", orgEmail: "" }));
+                }
+              }}
+            >
+              <option value="locadora">Locadora</option>
               <option value="proprietario">Proprietário</option>
             </select>
           </div>
 
-          <div className={styles.divider}>
-            <span>Dados da organização</span>
-          </div>
+          {perfil === "locadora" && (
+            <>
+              <div className={styles.divider}>
+                <span>Dados da organização</span>
+              </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Nome da organização</label>
-            <input
-              className={`${styles.input} ${erros.orgNome ? styles.inputErro : ""}`}
-              type="text"
-              placeholder="Razão social ou nome fantasia"
-              value={orgNome}
-              onChange={(e) => { setOrgNome(e.target.value); setErro("orgNome", ""); }}
-              onBlur={(e) => handleBlur("orgNome", e.target.value)}
-            />
-            {erros.orgNome && <span className={styles.erroCampo}>{erros.orgNome}</span>}
-          </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Nome da organização</label>
+                <input
+                  className={`${styles.input} ${erros.orgNome ? styles.inputErro : ""}`}
+                  type="text"
+                  placeholder="Razão social ou nome fantasia"
+                  value={orgNome}
+                  onChange={(e) => { setOrgNome(e.target.value); setErro("orgNome", ""); }}
+                  onBlur={(e) => handleBlur("orgNome", e.target.value)}
+                />
+                {erros.orgNome && <span className={styles.erroCampo}>{erros.orgNome}</span>}
+              </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>CNPJ</label>
-            <input
-              className={`${styles.input} ${erros.orgCnpj ? styles.inputErro : ""}`}
-              type="text"
-              placeholder="00.000.000/0001-00"
-              value={orgCnpj}
-              onChange={(e) => { setOrgCnpj(e.target.value); setErro("orgCnpj", ""); }}
-              onBlur={(e) => handleBlur("orgCnpj", e.target.value)}
-            />
-            {erros.orgCnpj && <span className={styles.erroCampo}>{erros.orgCnpj}</span>}
-          </div>
+              <div className={styles.field}>
+                <label className={styles.label}>CNPJ</label>
+                <input
+                  className={`${styles.input} ${erros.orgCnpj ? styles.inputErro : ""}`}
+                  type="text"
+                  placeholder="00.000.000/0001-00"
+                  value={orgCnpj}
+                  onChange={(e) => { setOrgCnpj(e.target.value); setErro("orgCnpj", ""); }}
+                  onBlur={(e) => handleBlur("orgCnpj", e.target.value)}
+                />
+                {erros.orgCnpj && <span className={styles.erroCampo}>{erros.orgCnpj}</span>}
+              </div>
 
-          <div className={styles.field}>
-            <label className={styles.label}>Email da organização</label>
-            <input
-              className={`${styles.input} ${erros.orgEmail ? styles.inputErro : ""}`}
-              type="email"
-              placeholder="contato@empresa.com"
-              value={orgEmail}
-              onChange={(e) => { setOrgEmail(e.target.value); setErro("orgEmail", ""); }}
-              onBlur={(e) => handleBlur("orgEmail", e.target.value)}
-            />
-            {erros.orgEmail && <span className={styles.erroCampo}>{erros.orgEmail}</span>}
-          </div>
+              <div className={styles.field}>
+                <label className={styles.label}>Email da organização</label>
+                <input
+                  className={`${styles.input} ${erros.orgEmail ? styles.inputErro : ""}`}
+                  type="email"
+                  placeholder="contato@empresa.com"
+                  value={orgEmail}
+                  onChange={(e) => { setOrgEmail(e.target.value); setErro("orgEmail", ""); }}
+                  onBlur={(e) => handleBlur("orgEmail", e.target.value)}
+                />
+                {erros.orgEmail && <span className={styles.erroCampo}>{erros.orgEmail}</span>}
+              </div>
+            </>
+          )}
 
           {erroServidor && <p className={styles.erro}>{erroServidor}</p>}
 

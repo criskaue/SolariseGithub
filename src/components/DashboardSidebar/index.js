@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './DashboardSidebar.module.css';
-import logoImg from '../images/logo.png';
+import logoImg from '../images/Logo (2).png';
 
 const Icons = {
   user: (
@@ -63,7 +63,7 @@ function DashboardSidebar() {
         <div className={styles.avatarTopo}>{Icons.user}</div>
         <img src={logoImg} alt="Solarise" className={styles.logo} />
         <div className={styles.greeting}>
-          <span className={styles.greetingText}>Bem vinda</span>
+          <span className={styles.greetingText}>Bem vindo(a)</span>
           <span className={styles.userName}>{primeiroNome}</span>
         </div>
       </div>

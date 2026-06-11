@@ -19,9 +19,13 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
 
-    if (status === 401) {
-      // Token expirado ou inválido — limpa sessão e força novo login
+    if (status === 401 && window.location.pathname !== '/login') {
+      // Sessão expirada ou token inválido — limpa sessão e força novo login
       localStorage.removeItem('token');
+      // Limpa cookies de sessão que possam existir
+      document.cookie.split(';').forEach((c) => {
+        document.cookie = c.trim().replace(/=.*/, '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/');
+      });
       window.location.href = '/login';
     }
 

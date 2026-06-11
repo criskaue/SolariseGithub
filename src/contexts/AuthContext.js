@@ -13,9 +13,12 @@ export function AuthProvider({ children }) {
     if (token) {
       api.get('/auth/profile')
         .then(({ data }) => setUser(data))
-        .catch(() => {
-          // Token inválido ou expirado — remove e força novo login
-          localStorage.removeItem('token');
+        .catch((err) => {
+          // Só remove o token se for realmente erro de autenticação (401 é tratado
+          // pelo interceptor do api.js; aqui chegam erros 4xx diferentes ou rede)
+          if (err.response?.status === 401) {
+            localStorage.removeItem('token');
+          }
         })
         .finally(() => setLoading(false));
     } else {
