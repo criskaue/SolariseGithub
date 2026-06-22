@@ -1,0 +1,95 @@
+/* ── Layout ── */
+.page {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f6fa;
+}
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 40px;
+}
+
+/* ── Cabeçalho ── */
+.titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a3d1e;
+  margin: 0 0 4px;
+}
+
+.subtitulo {
+  font-size: 0.86rem;
+  color: #999;
+  margin: 0 0 26px;
+}
+
+/* ── Tabela de contratos ── */
+.tabelaCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th {
+  text-align: left;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #555;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.tabela td {
+  font-size: 0.88rem;
+  color: #444;
+  padding: 14px 20px;
+  vertical-align: middle;
+}
+
+.tabela tbody tr:nth-child(even) {
+  background: #f3f5f7;
+}
+
+.numero { font-weight: 600; color: #222; }
+
+/* ── Badge de status ── */
+.statusBadge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: #e8f3e9;
+  color: #2d5e32;
+  text-transform: capitalize;
+}
+
+/* ── Estados auxiliares ── */
+.estado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f5f6fa;
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.estadoErro { color: #c0392b; }
+
+.vazio {
+  text-align: center;
+  font-size: 0.88rem;
+  color: #999;
+  padding: 28px 0;
+}
