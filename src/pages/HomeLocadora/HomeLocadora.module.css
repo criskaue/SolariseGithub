@@ -9,260 +9,184 @@
 .main {
   flex: 1;
   overflow-y: auto;
-  padding: 28px;
+  padding: 32px 40px;
 }
 
-/* ── Grid de métricas ── */
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.statCard {
-  background: #fff;
+/* ── Banner de verificação ── */
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(90deg, #4a9d5b 0%, #3d8f4d 100%);
   border-radius: 12px;
-  padding: 20px 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 22px 28px;
+  margin-bottom: 36px;
+  box-shadow: 0 2px 6px rgba(61, 143, 77, 0.25);
 }
 
-.statHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.statTitle {
-  font-size: 0.82rem;
-  color: #888;
-  font-weight: 500;
-}
-
-.statValue {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1a3d1e;
-  line-height: 1.1;
-  margin-bottom: 4px;
-}
-
-.statUnit {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-left: 2px;
-}
-
-.statRef {
-  font-size: 0.72rem;
-  color: #bbb;
-  margin-bottom: 6px;
-  min-height: 16px;
-}
-
-.statTrend {
-  font-size: 0.76rem;
-  color: #528B55;
-  font-weight: 500;
-}
-
-/* ── Linha de gráficos ── */
-.chartsRow {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.chartCard {
-  background: #fff;
+.bannerIcone {
+  width: 52px;
+  height: 52px;
   border-radius: 12px;
-  padding: 20px 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-.chartHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.chartTitle {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #111;
-  margin: 0 0 12px 0;
-}
-
-.filterSelect {
-  font-size: 0.78rem;
-  color: #555;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 5px 10px;
-  background: #fff;
-  cursor: pointer;
-  outline: none;
-}
-
-/* ── Donut ── */
-.donutWrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.donutLegend {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.legendItem {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.78rem;
-}
-
-.legendDot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.legendName { flex: 1; color: #555; }
-.legendPct  { font-weight: 600; color: #222; }
-
-/* ── Tabela ── */
-.tableCard {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-.tableHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.tableTitle {
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #111;
-  margin: 0;
-}
-
-.verTodosBtn {
-  font-size: 0.8rem;
-  color: #fff;
-  background: #1a3d1e;
-  border: none;
-  border-radius: 7px;
-  padding: 8px 18px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background 0.15s;
-}
-.verTodosBtn:hover { background: #2d5e32; }
-
-.contratoRow {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 0;
-  border-top: 1px solid #f5f5f5;
-}
-
-.contratoAvatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.82rem;
   flex-shrink: 0;
 }
 
-.contratoInfo {
-  min-width: 155px;
-  display: flex;
-  flex-direction: column;
+.bannerTexto {
+  margin: 0;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.bannerTexto strong {
+  font-weight: 700;
 }
 
-.contratoNome { font-size: 0.84rem; font-weight: 600; color: #111; }
-.contratoNum  { font-size: 0.72rem; color: #aaa; margin-top: 2px; }
-
-.contratoUsina {
+/* ── Divisor "Histórico de Auditoria" ── */
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 22px;
+  color: #555;
+}
+.divisor::before,
+.divisor::after {
+  content: '';
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  font-size: 0.82rem;
-  color: #444;
+  height: 1px;
+  background: #d9dde0;
 }
-
-.capacidade { font-size: 0.72rem; color: #aaa; margin-top: 2px; }
-
-.contratoData {
-  display: flex;
-  flex-direction: column;
-  min-width: 110px;
-}
-
-.dataLabel { font-size: 0.68rem; color: #bbb; font-weight: 500; }
-
-.dataVal {
-  font-size: 0.8rem;
-  color: #333;
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
-.valorMensal {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: #528B55;
-  margin-top: 3px;
-}
-
-.menuBtn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-}
-.menuBtn:hover { background: #f5f5f5; }
-
-.pdfBtn {
-  background: none;
-  border: 1px solid #c4dfc7;
-  color: #528B55;
-  cursor: pointer;
-  padding: 6px 8px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
+.divisor span {
+  font-size: 1.25rem;
   font-weight: 500;
+  color: #444;
   white-space: nowrap;
-  transition: background 0.15s, border-color 0.15s;
 }
-.pdfBtn:hover:not(:disabled) { background: #f0f8f0; border-color: #528B55; }
-.pdfBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Tabela de auditoria ── */
+.tabelaCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th {
+  text-align: left;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #555;
+  padding: 16px 20px;
+}
+
+.tabela td {
+  font-size: 0.88rem;
+  color: #444;
+  padding: 14px 20px;
+  vertical-align: middle;
+}
+
+.tabela tbody tr:nth-child(even) {
+  background: #f3f5f7;
+}
+
+.mesDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4a9d5b;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.hashCol {
+  font-family: 'Courier New', Courier, monospace;
+  color: #555;
+  letter-spacing: 0.3px;
+}
+
+.hashCol:last-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ── Botão "Ver completo" ── */
+.verBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5a623;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.verBtn:hover {
+  background: #e0941a;
+}
+
+/* ── Badge de status ── */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #5cae5c;
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ── Card "Como funciona a verificação?" ── */
+.explicacaoCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.explicacaoTitulo {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 18px 0;
+}
+
+.explicacaoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #555;
+  padding: 8px 0;
+}
+
+.explicacaoDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4a9d5b;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
