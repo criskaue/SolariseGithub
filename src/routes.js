@@ -6,6 +6,8 @@ import Geracao from './pages/Geracao';
 import PainelInstaladora from './pages/PainelInstaladora';
 import HomeLocadora from "./pages/HomeLocadora";
 import HomeInstaladora from "./pages/HomeInstaladora";
+import Contatos from "./pages/Contatos";
+import Registros from "./pages/Registros";
 import PrivateRoute from "./components/PrivateRoute";
 
 function AppRoutes(){
@@ -22,6 +24,8 @@ function AppRoutes(){
                 {/* Rotas privadas */}
                 <Route path="/homelocadora"    element={ <PrivateRoute><HomeLocadora /></PrivateRoute> } />
                 <Route path="/homeinstaladora" element={ <PrivateRoute><HomeInstaladora /></PrivateRoute> } />
+                <Route path="/contatos"        element={ <PrivateRoute><Contatos /></PrivateRoute> } />
+                <Route path="/registros"       element={ <PrivateRoute><Registros /></PrivateRoute> } />
                 <Route path="/geracao"         element={ <PrivateRoute><Geracao /></PrivateRoute> } />
                 <Route path="/painel"          element={ <PrivateRoute><PainelInstaladora /></PrivateRoute> } />
 

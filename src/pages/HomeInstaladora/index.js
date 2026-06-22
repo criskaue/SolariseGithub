@@ -11,7 +11,7 @@ const geracaoData = [
   { nome: 'Diego',  kwh: 18000 },
   { nome: 'Rosa',   kwh: 30000 },
   { nome: 'Daniel', kwh: 20000 },
-  { nome: 'Olivio', kwh: 24000 },
+  { nome: 'Olivia', kwh: 24000 },
 ];
 
 const BAR_COLORS = ['#a8d5ab', '#2d5e32', '#1a3d1e', '#528B55', '#7ab87e'];
@@ -118,7 +118,14 @@ function HomeInstaladora() {
         {/* ── Gráficos ── */}
         <div className={styles.chartsRow}>
           <div className={styles.chartCard}>
-            <h3 className={styles.chartTitle}>Geração por contrato</h3>
+            <div className={styles.chartHeader}>
+              <h3 className={styles.chartTitle}>Geração por contrato</h3>
+              <select className={styles.chartSelect} defaultValue="ultimo">
+                <option value="ultimo">Último mês</option>
+                <option value="trimestre">Último trimestre</option>
+                <option value="ano">Último ano</option>
+              </select>
+            </div>
             <ResponsiveContainer width="100%" height={210}>
               <BarChart data={geracaoData} margin={{ top: 10, right: 8, left: -10, bottom: 0 }} barSize={40}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />

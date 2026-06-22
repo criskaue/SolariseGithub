@@ -85,6 +85,21 @@
   color: #528B55;
 }
 
+/* ── Tema Locadora (laranja) ── */
+.sidebarLocadora .logo {
+  filter: hue-rotate(270deg) saturate(1.7) brightness(1.05);
+}
+
+.sidebarLocadora .navItem:hover,
+.sidebarLocadora .navActive {
+  background: #fdf3e6;
+  color: #e8a23d;
+}
+
+.sidebarLocadora .eventDesc {
+  color: #e8a23d;
+}
+
 /* ── Seções (atualizações + eventos) ── */
 .section {
   display: flex;

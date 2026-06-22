@@ -53,7 +53,7 @@ function Cadastro() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [perfil, setPerfil] = useState("locadora");
+  const [perfil, setPerfil] = useState("instaladora");
   const [orgNome, setOrgNome] = useState("");
   const [orgCnpj, setOrgCnpj] = useState("");
   const [orgEmail, setOrgEmail] = useState("");
@@ -79,9 +79,9 @@ function Cadastro() {
       email: validar("email", email),
       senha: validar("senha", senha),
       confirmarSenha: validar("confirmarSenha", confirmarSenha, senha),
-      orgNome: perfil === "locadora" ? validar("orgNome", orgNome) : "",
-      orgCnpj: perfil === "locadora" ? validar("orgCnpj", orgCnpj) : "",
-      orgEmail: perfil === "locadora" ? validar("orgEmail", orgEmail) : "",
+      orgNome: perfil === "instaladora" ? validar("orgNome", orgNome) : "",
+      orgCnpj: perfil === "instaladora" ? validar("orgCnpj", orgCnpj) : "",
+      orgEmail: perfil === "instaladora" ? validar("orgEmail", orgEmail) : "",
     };
     setErros(novosErros);
     return Object.values(novosErros).every((e) => e === "");
@@ -94,7 +94,7 @@ function Cadastro() {
     setCarregando(true);
     try {
       const payload = { name: nome, email, password: senha, role: perfil };
-      if (perfil === "locadora") {
+      if (perfil === "instaladora") {
         payload.org_name = orgNome;
         payload.org_cnpj = orgCnpj;
         payload.org_email = orgEmail;
@@ -215,18 +215,18 @@ function Cadastro() {
               value={perfil}
               onChange={(e) => {
                 setPerfil(e.target.value);
-                if (e.target.value !== "locadora") {
+                if (e.target.value !== "instaladora") {
                   setOrgNome(""); setOrgCnpj(""); setOrgEmail("");
                   setErros((prev) => ({ ...prev, orgNome: "", orgCnpj: "", orgEmail: "" }));
                 }
               }}
             >
+              <option value="instaladora">Instaladora</option>
               <option value="locadora">Locadora</option>
-              <option value="proprietario">Proprietário</option>
             </select>
           </div>
 
-          {perfil === "locadora" && (
+          {perfil === "instaladora" && (
             <>
               <div className={styles.divider}>
                 <span>Dados da organização</span>

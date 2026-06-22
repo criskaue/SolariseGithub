@@ -16,24 +16,12 @@ const Icons = {
       <polyline points="9 22 9 12 15 12 15 22"/>
     </svg>
   ),
-  pesquisa: (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="11" cy="11" r="8"/>
-      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-  ),
   contatos: (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
       <circle cx="9" cy="7" r="4"/>
       <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
       <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-    </svg>
-  ),
-  historico: (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10"/>
-      <polyline points="12 6 12 12 16 14"/>
     </svg>
   ),
   registro: (
@@ -44,21 +32,27 @@ const Icons = {
   ),
 };
 
-const NAV_ITEMS = [
-  { key: 'inicio',    label: 'Início',    icon: Icons.inicio },
-  { key: 'pesquisa',  label: 'Pesquisa',  icon: Icons.pesquisa },
-  { key: 'contatos',  label: 'Contatos',  icon: Icons.contatos },
-  { key: 'historico', label: 'Histórico', icon: Icons.historico },
-  { key: 'registro',  label: 'Registro',  icon: Icons.registro },
+const NAV_INSTALADORA = [
+  { key: 'inicio',   label: 'Início',   icon: Icons.inicio },
+  { key: 'contatos', label: 'Contatos', icon: Icons.contatos },
+  { key: 'registro', label: 'Registro', icon: Icons.registro },
+];
+
+const NAV_LOCADORA = [
+  { key: 'inicio',   label: 'Início',   icon: Icons.inicio },
+  { key: 'contatos', label: 'Contatos', icon: Icons.contatos },
 ];
 
 function DashboardSidebar() {
   const { user } = useAuth();
   const primeiroNome = user?.name?.split(' ')[0] ?? 'Usuário';
-  const homeHref = user?.role === 'instaladora' ? '/homeinstaladora' : '/homelocadora';
+  const isInstaladora = user?.role === 'instaladora';
+  const homeHref = isInstaladora ? '/homeinstaladora' : '/homelocadora';
+  const contatosHref = isInstaladora ? '/contatos' : '/contatoslocadora';
+  const navItems = isInstaladora ? NAV_INSTALADORA : NAV_LOCADORA;
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${isInstaladora ? '' : styles.sidebarLocadora}`}>
       <div className={styles.topSection}>
         <div className={styles.avatarTopo}>{Icons.user}</div>
         <img src={logoImg} alt="Solarise" className={styles.logo} />
@@ -69,11 +63,12 @@ function DashboardSidebar() {
       </div>
 
       <nav className={styles.nav}>
-        {NAV_ITEMS.map(({ key, label, icon }) =>
-          key === 'inicio' ? (
+        {navItems.map(({ key, label, icon }) => {
+          const to = key === 'inicio' ? homeHref : key === 'contatos' ? contatosHref : key === 'registro' ? '/registros' : null;
+          return to ? (
             <NavLink
               key={key}
-              to={homeHref}
+              to={to}
               end
               className={({ isActive }) => `${styles.navItem} ${isActive ? styles.navActive : ''}`}
             >
@@ -85,8 +80,8 @@ function DashboardSidebar() {
               {icon}
               <span>{label}</span>
             </button>
-          )
-        )}
+          );
+        })}
       </nav>
 
       <div className={styles.section}>
